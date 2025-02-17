@@ -4,8 +4,6 @@
 #include<unistd.h>
 #include<sys/syscall.h>
 #include<iostream>
-#include <chrono>
-#include <thread>
 using namespace std;
 
 /**
@@ -23,10 +21,9 @@ using namespace std;
 pthread_mutex_t mutex;
 pthread_cond_t condition;
 int count;
-bool is_running = true;
 
 void* task1(void* arg){
-    while(is_running){
+    while(1){
         pthread_mutex_lock(&mutex);
         while(count < 10){
             pthread_cond_wait(&condition,&mutex);
@@ -38,25 +35,21 @@ void* task1(void* arg){
  
     return 0;
 }  
-  
+
 void* task2(void* arg){
+    
     for(int i = 0; i < 100; i++){
-        // 短时间自旋等待，避免过快获取锁
-        // for(int j = 0; j < 100000; j++);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        for(int j = 0; j < 100000; j++);
         pthread_mutex_lock(&mutex);
         count++;
-        cout << "task2:  count:" << count << endl;
+        cout<<"task2:  count:"<<count<<endl;
         pthread_mutex_unlock(&mutex);
-        // 发送条件变量信号，唤醒可能等待的线程
         pthread_cond_signal(&condition);
+
     }
-    // 设置标志变量，通知 task1 线程退出
-    is_running = false;
-    // 最后再发送一次信号，确保 task1 能退出等待状态
-    pthread_cond_signal(&condition);
-    return nullptr;
-}
+    
+    return 0;
+}  
 
 
 
