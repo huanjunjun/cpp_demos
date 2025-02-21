@@ -16,11 +16,13 @@ class mydata{
     public:
         pthread_mutex_t mutex1;
         pthread_cond_t cond1;
+        pthread_cond_t cond2;
 
         mydata(int n):index(0),capicity(n){
             data = new int[n];
             pthread_mutex_init(&mutex1,NULL);
             pthread_cond_init(&cond1,NULL);
+            pthread_cond_init(&cond2,NULL);
         }
         ~mydata(){
             delete[] data;
@@ -44,6 +46,7 @@ class mydata{
                 index--;
                 cout<<"consume one then index is:"<<index<<endl;
 
+                pthread_cond_signal(&cond2);
                 pthread_mutex_unlock(&mutex1);
 
             }
@@ -58,13 +61,18 @@ class mydata{
                 
                 pthread_mutex_lock(&mutex1);
 
+                while(index>=capicity){
+                    cout<<"生产者等待"<<endl;
+                    pthread_cond_wait(&cond2,&mutex1);
+                }
                 cout<<"current index is:"<<index<<endl;
                 index++;
                 cout<<"produce one then index is:"<<index<<endl;
 
+                pthread_cond_broadcast(&cond1);
                 pthread_mutex_unlock(&mutex1);
                 // pthread_cond_signal(&cond1);
-                pthread_cond_broadcast(&cond1);
+
             }
             return ;
         }
@@ -89,6 +97,7 @@ int main(){
 
     mydata data(10);
     pthread_create(&tid1,NULL,produce,&data);
+    
     pthread_create(&tid2,NULL,consume,&data);
     pthread_create(&tid2,NULL,consume,&data);
     pthread_create(&tid2,NULL,consume,&data);
