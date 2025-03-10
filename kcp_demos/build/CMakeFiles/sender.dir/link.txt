@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/sender.dir/src/sender.cpp.o  -o sender libkcp_wrapper.a -lpthread libkcp.a 

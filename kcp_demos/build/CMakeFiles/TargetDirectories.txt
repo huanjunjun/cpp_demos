@@ -1,0 +1,10 @@
+/root/kcpwrapper/build/CMakeFiles/install/strip.dir
+/root/kcpwrapper/build/CMakeFiles/install/local.dir
+/root/kcpwrapper/build/CMakeFiles/install.dir
+/root/kcpwrapper/build/CMakeFiles/list_install_components.dir
+/root/kcpwrapper/build/CMakeFiles/edit_cache.dir
+/root/kcpwrapper/build/CMakeFiles/kcp.dir
+/root/kcpwrapper/build/CMakeFiles/rebuild_cache.dir
+/root/kcpwrapper/build/CMakeFiles/receiver.dir
+/root/kcpwrapper/build/CMakeFiles/kcp_wrapper.dir
+/root/kcpwrapper/build/CMakeFiles/sender.dir

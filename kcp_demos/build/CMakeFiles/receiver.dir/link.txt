@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/receiver.dir/src/receiver.cpp.o  -o receiver libkcp_wrapper.a -lpthread libkcp.a 
